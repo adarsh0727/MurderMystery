@@ -4,7 +4,7 @@
   "description": "will contain server portion for spring fest's website 2k24",
   "main": "server.js",
   "scripts": {},
-  "author": "Shradhesh",
+  "author": "Adarsh",
   "license": "ISC",
   "dependencies": {
     "bcryptjs": "^2.4.3",
@@ -15,6 +15,8 @@
     "express": "^4.19.2",
     "jsonwebtoken": "^9.0.2",
     "mongoose": "^8.2.3",
+    "passport": "^0.7.0",
+    "passport-jwt": "^4.0.1",
     "routes": "^2.1.0"
   },
   "devDependencies": {

@@ -21,7 +21,7 @@ router.post("/userlogin", async (req, res) => {
     const user = await User.findOne({ email });
 
     if (!user) {
-      return res.json({ error: "User does not exist" }, { status: 400 });
+      return res.status(400).json({ error: "User does not exist" });
     }
     console.log("user exists");
 
@@ -30,7 +30,8 @@ router.post("/userlogin", async (req, res) => {
     if (!validPassword) {
       return res.status(400).json({ error: "Invalid password" });
     }
-    return res.send("OK");
+    console.log(user)
+    // return res.send("OK");
     
     const token = createTokenForUser(user);
 

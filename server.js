@@ -14,8 +14,10 @@ const login = require("./routes/login");
 
 
 connect();
-
-app.use("/login", login);
+app.get('/',(req,res)=>{
+  res.sendFile(__dirname + '/public/login.html')
+})
+app.use("/", login);
 
 
 app.use(cookiePaser());
