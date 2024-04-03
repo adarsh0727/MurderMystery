@@ -5,6 +5,10 @@ const cors = require("cors");
 const port = process.env.PORT || 5000;
 const { connect } = require("./db/connect");
 const cookiePaser = require("cookie-parser");
+const bodyParser = require("body-parser");
+
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json()); 
 
 app.use(express.static("public"))
 

@@ -6,7 +6,8 @@ const { createTokenForUser } = require("../controllers/authentication");
 const path = require('path');
 
 const router = Router();
-router.use(bodyParser.json());
+router.use(bodyParser.urlencoded({ extended: true }));
+router.use(bodyParser.json()); 
 
 // router.get("/", (req, res) => {
 //   console.log(__dirname,path.join("../..frontend/index.html"))
