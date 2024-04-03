@@ -30,8 +30,8 @@ router.post("/userlogin", async (req, res) => {
     if (!validPassword) {
       return res.status(400).json({ error: "Invalid password" });
     }
-    console.log(user);//redirect to homepage 
-
+    return res.send("OK");
+    
     const token = createTokenForUser(user);
 
     return res.json({ token: token, message: "successful" });
