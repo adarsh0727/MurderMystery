@@ -5,8 +5,15 @@ body, html {
 	position: relative;
 }
 .center-block{
-	height:93px;
+	height:250px;
+	width:450px;
 }
+.custom{
+	height:35px;
+	width:500px;
+	background-color: #c90000;
+}
+
 
 #login-box {
 	position: absolute;
