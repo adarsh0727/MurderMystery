@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>question</title>
+</head>
+<body>
+    <img src="" alt="question-img" id="question-image" height="200px" width="200px"/>
+    <form action="/userlogin" method="post" id="answerForm">
+        <input type="text" id = "ans-input" name="ans-input" placeholder="answer" class="form-control" />
+        <button type="submit" class="btn btn-default btn-block btn-custom" >submit</button>
+    </form>
+    
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.1.2/socket.io.js"></script>
+
+    <script>
+        const answerform = document.getElementById("answerForm");
+        const question_image = document.getElementById("question-image");
+        const socket = io();
+        var number =  localStorage.getItem("number") === null ? 1 : Number(localStorage.getItem("number"))
+        question_image.setAttribute('src',`./images/${number}.jpg`)
+
+    answerform.addEventListener("submit", async (e) => {
+        e.preventDefault(); 
+        const ans_input = document.getElementById("ans-input").value;
+        
+        try {
+            const response = await fetch("http://localhost:3000/", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({ ans_input,number }), // Send email and password in the body
+            });
+
+            if (response.ok) {
+                const data = await response.json();
+                number += 1 
+                localStorage.setItem("number",number);
+                question_image.setAttribute('src',`./images/${number}.jpg`)
+                console.log(data); 
+            } else {
+                console.error("Server response was not OK");
+            }
+        } catch (error) {
+            console.error(error);
+        }
+    });
+
+    </script>
+</body>
+</html>

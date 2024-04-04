@@ -1,8 +1,9 @@
 const mongoose = require("mongoose");
+require("dotenv").config();
 
 async function connect() {
   try {
-    mongoose.connect('mongodb+srv://adarsh0727:usWx5t1LlRrrIrmT@cluster0.d0hatms.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0');
+    await mongoose.connect(process.env.MONGO_URI);
     const connection = mongoose.connection;
 
     connection.on("connected", () => {
@@ -20,4 +21,4 @@ async function connect() {
     console.log(error);
   }
 }
-module.exports = { connect}
+module.exports = { connect };
