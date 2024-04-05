@@ -2,6 +2,8 @@ const express = require("express");
 const app = express();
 app.use(express.json()); // Middleware to parse JSON bodies
 require("dotenv").config();
+const Admin = process.env.ADMIN;
+
 const cors = require("cors");
 const { connect } = require("./db/connect");
 const { validateToken } = require("./middlewares/authentication");
@@ -37,6 +39,8 @@ io.on("connection", (socket) => {
 // add-questions
 const Question = require("./models/question");
 app.post("/add-questions", async (req, res) => {
+  const authHeader = req.header('auth-header');
+  if(authHeader === Admin){
   const { question, answer } = req.body;
   const newQuestion = new Question({
     question,
@@ -45,7 +49,11 @@ app.post("/add-questions", async (req, res) => {
   await newQuestion.save();
   res.status(201).json({
     message: "Question added successfully",
+  });return;}
+res.status(403).json({
+    message: "Bhak 🍆",
   });
+  
 });
 
 //add-users
