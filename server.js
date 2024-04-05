@@ -4,7 +4,14 @@ app.use(express.json()); // Middleware to parse JSON bodies
 require("dotenv").config();
 const cors = require("cors");
 const { connect } = require("./db/connect");
-const { validateToken } = require("./middlewares/authentication");
+const cookiePaser = require("cookie-parser");
+const bodyParser = require("body-parser");
+
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
+
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
 
 app.use(require("cookie-parser")());
 app.use(express.static("public"));
@@ -13,8 +20,11 @@ app.use(cors());
 // connection with mongodb database
 connect();
 
-const port = process.env.PORT || 5000;
-const server = app.listen(port, () => {
+app.use("/login", login);
+
+app.use(cookiePaser());
+
+app.listen(port, () => {
   console.log(`The Website started successfully on port ${port}`);
 });
 
