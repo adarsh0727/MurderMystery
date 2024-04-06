@@ -76,3 +76,18 @@ body{
     color: white;
 }
 
+#leaderboard-btn{
+    margin :0 45vw ;
+    margin-bottom : -50vh;
+    border: none;
+    border-radius: 7px;
+    font-size: 14px;
+    background-color: #800000;
+    color: white;
+    cursor: pointer;
+    width:96px;
+    height: 50px;
+}
+#leaderboard-btn:hover{
+    background-color: red; /* Darker shade on hover */
+}
