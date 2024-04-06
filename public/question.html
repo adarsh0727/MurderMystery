@@ -3,14 +3,23 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>question</title>
+    <title>HomePage</title>
+    <link rel="stylesheet" href="./question.css">
+
 </head>
 <body>
-    <img src="" alt="question-img" id="question-image" height="200px" width="200px"/>
-    <form action="/userlogin" method="post" id="answerForm">
-        <input type="text" id = "ans-input" name="ans-input" placeholder="answer" class="form-control" />
-        <button type="submit" class="btn btn-default btn-block btn-custom" >submit</button>
-    </form>
+    <div class="container">
+        <div class="image-container" style="border:1px solid white" >
+            <img src="" alt="question-img" id="question-image" class="image"/>
+        </div>
+        <div class="form-container">
+            <form id="answerForm">
+                <input type="text" name="answer" class="style s1" placeholder="Enter your answer" id = "ans-input">
+                <input type="submit" class = "style  style-submit" value="Submit">
+            </form>
+        </div>
+    </div>
+
     
   <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.1.2/socket.io.js"></script>
 
@@ -21,7 +30,7 @@
         var number =  localStorage.getItem("number") === null ? 1 : Number(localStorage.getItem("number"))
         question_image.setAttribute('src',`./images/${number}.jpg`)
 
-    answerform.addEventListener("submit", async (e) => {
+        answerform.addEventListener("submit", async (e) => {
         e.preventDefault(); 
         const ans_input = document.getElementById("ans-input").value;
         

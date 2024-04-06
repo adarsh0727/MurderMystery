@@ -38,7 +38,6 @@ io.on("connection", (socket) => {
 // add-questions
 const Question = require("./models/question");
 app.post("/add-questions", async (req, res) => {
-
   const { question, answer } = req.body;
   const newQuestion = new Question({
     question,
@@ -48,8 +47,6 @@ app.post("/add-questions", async (req, res) => {
   res.status(201).json({
     message: "Question added successfully",
   });
-
-  
 });
 
 //add-users
@@ -91,9 +88,8 @@ app.post("/login/userlogin", async (req, res) => {
     console.log("user exists");
 
     //check if password is correct
-    const validPassword = bcryptjs.compare(password, user.password);
-    if (!validPassword) {
-      return res.status(400).json({ error: "Invalid password" });
+    if (password != user.password) {
+      return res.status(400).json({ error: "Incorrect Password" });
     }
 
     //creating json web token :

@@ -4,10 +4,27 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Leaderboard</title>
+    <link rel="stylesheet" href="./leaderboard.css">
+
 </head>
 <body>
-    <h1>Leaderboard</h1>
-    <ul id="leaderboard"></ul>
+    <div class="leaderboard-box">
+        <p class="leaderboard-text">Leaderboard</p>
+    </div>
+    <table id="leaderboard-table">
+        <thead>
+            <tr>
+                <th>Ranking</th>
+                <th>Team Name</th>
+                <th>Score</th>
+                <th>Time</th>
+            </tr>
+        </thead>
+        <tbody id="leaderboard-body">
+        </tbody>
+    </table>
+
+   
     <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.1.2/socket.io.js"></script>
 
       <script>
@@ -15,24 +32,24 @@
         // getting data
 
         let wrapper = async()=>{
-                            const response =await  fetch("http://localhost:3000/getLeaderboard", {
-                                method: "GET",
-                                headers: {
-                                    "Content-Type": "application/json",
-                                },
-                            });
-                            
-                                        if (response.ok) {
-                                            const data = await response.json();
-                                           console.log(data.leaderboard)
-                                           updateLeaderboard(data.leaderboard)
-                                        } else {
-                                            console.error("Server response was not OK");
-                                        }
-
+            const response =await  fetch("http://localhost:3000/getLeaderboard", {
+                method: "GET",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+            });
+            
+            if (response.ok) {
+                const data = await response.json();
+                console.log(data.leaderboard)
+                updateLeaderboard(data.leaderboard)
+            } else {
+                console.error("Server response was not OK");
             }
+
+        }
   
-            wrapper()
+        wrapper()
         const socket = io();
 
         // Update leaderboard function
@@ -45,16 +62,21 @@
                 }
                 return b.score - a.score; // Sort by score
             });
-            const leaderboardElement = document.getElementById('leaderboard');
-            leaderboardElement.innerHTML = '';
-            data.forEach((entry, index) => {
-                const li = document.createElement('li');
+
+            const leaderboardBody = document.getElementById('leaderboard-body');
+            leaderboardBody.innerHTML = ''; 
+            data.forEach((entry,index) => {
+                const row = document.createElement('tr');
                 time = entry.time
                 date = new Date(time)
                 let t = date.toLocaleTimeString();
-
-                li.textContent = `Team: ${entry.name}. Score: ${entry.score}, Time: ${t}`;
-                leaderboardElement.appendChild(li);
+                row.innerHTML = `
+                    <td>${index+1}</td>
+                    <td>${entry.name}</td>
+                    <td>${entry.score}</td>
+                    <td>${t}</td>
+                `;
+                leaderboardBody.appendChild(row);
             });
         };
 
