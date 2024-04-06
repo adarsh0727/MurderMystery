@@ -60,8 +60,9 @@
         const updateLeaderboard = (data) => {
             data.sort((a, b) => {
                 if (a.score === b.score) {
-                    a.time = new Date(a.time).getTime();
-                    b.time = new Date(b.time).getTime();
+                    a.time = Number(new Date(a.time).getTime());
+                    b.time = Number(new Date(b.time).getTime());
+                    console.log(a.time , b.time)
                     return a.time -  b.time; // If scores are equal, sort by submission time
                 }
                 return b.score - a.score; // Sort by score
