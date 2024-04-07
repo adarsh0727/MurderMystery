@@ -118,10 +118,17 @@ app.get("/", validateToken, async (req, res) => {
   res.sendFile(path.resolve(__dirname, "./public/question.html"));
 });
 
+app.get("/getScore", validateToken, async (req, res) => {
+  // console.log("hereeee");
+  const user_id = req.userAuth.id;
+  const user = await User.findOne({ _id: user_id });
+  res.json({ score: user.score });
+});
+
 const getLeaderboard = async (req, res) => {
   var leaderboard = [];
   const all_users = await User.find();
-  // console.log(all_users);
+
   all_users.forEach((user) => {
     const userDetails = {
       name: user.email,
