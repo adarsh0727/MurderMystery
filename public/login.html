@@ -42,7 +42,7 @@
         const errorMessage = document.getElementById("error-message");
 
         try {
-            const response = await fetch("/login/userlogin", {
+            const response = await fetch("http://localhost:3000/login/userlogin", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",

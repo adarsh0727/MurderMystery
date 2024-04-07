@@ -94,9 +94,6 @@ app.post("/login/userlogin", async (req, res) => {
 
     //creating json web token :
     const jwt_token = createTokenForUser(user);
-    console.log("everything before socket successfull");
-    // startSocketConnection(io);
-    // io.emit("login", "login succesfull");
 
     return res
       .cookie("token", jwt_token, {
@@ -142,14 +139,12 @@ app.post("/", validateToken, async (req, res) => {
 
     const user_id = req.userAuth.id;
     const user = await User.findOne({ _id: user_id });
-
     const question = await Question.findOne({ question_img: `${number}.jpg` });
     if (!question) {
       return res.status(400).json({ error: "No Question Exist with this ID" });
     }
 
     if (ans_input === question.answer) {
-      console.log(user);
       user.score += 1;
       user.time_taken = Date.now();
       await user.save();

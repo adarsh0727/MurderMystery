@@ -16,7 +16,7 @@
         <div class="form-container">
             <form id="answerForm">
                 <input type="text" name="answer" class="style s1" placeholder="Enter your answer" id = "ans-input">
-                <input type="submit" class = "style  style-submit" value="Submit">
+                <input type="submit" class = "style  style-submit" value="Submit" id="submit-btn">
             </form>
         </div>
     </div>
@@ -29,41 +29,57 @@
         }
         const answerForm = document.getElementById("answerForm");
         const question_image = document.getElementById("question-image");
+        const submit_btn = document.getElementById("submit-btn");
+        const ans_input_field = document.getElementById("ans-input");
+
         const socket = io();
+
         var number =  localStorage.getItem("number") === null ? 1 : Number(localStorage.getItem("number"))
         question_image.setAttribute('src',`./images/${number}.jpg`)
+        if (number > 6) {
+            submit_btn.style.display = "none";
+            ans_input_field.style.display = "none";
+        }
 
         answerForm.addEventListener("submit", async (e) => {
             e.preventDefault(); 
-            
             const ans_input = document.getElementById("ans-input").value;
+
             try {
                 const response = await fetch("http://localhost:3000/", {
                     method: "POST",
                     headers: {
                         "Content-Type": "application/json",
                     },
-                    body: JSON.stringify({ ans_input,number }), 
+                    body: JSON.stringify({ ans_input,number }),
                 });
-
                 if (response.ok) {
+                    console.log("response is ok")
                     const data = await response.json();
                     number += 1 
+                    // on completion : 
                     if (number > 6) {
-                        number = 6
-                        window.alert("you completed the first round successfully")
+                        localStorage.setItem("number",number);
+                        question_image.setAttribute('src',`./images/${number}.jpg`)   // 7.jpg is for completion of challenge...
+                        window.alert("You Completed the Riddle Round successfully")
+                        submit_btn.style.display = "none";
+                        ans_input_field.style.display = "none";
                     }
-                    localStorage.setItem("number",number);
-                    question_image.setAttribute('src',`./images/${number}.jpg`)
-                    console.log(data); 
+                    else{
+                        localStorage.setItem("number",number);
+                        question_image.setAttribute('src',`./images/${number}.jpg`)
+                    }
+                    console.log(data);
                 } else {
                     console.error("Server response was not OK");
                 }
             } catch (error) {
                 console.error(error);
             }
-    });
+        });
 
+        
+            
     </script>
 </body>
 </html>
