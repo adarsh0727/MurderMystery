@@ -30,13 +30,13 @@
 
       <script>
         const handleHome = () => {
-            window.location.href = "http://localhost:3000/";
+            window.location.href = "/";
         }
         
         // getting data
 
         let wrapper = async()=>{
-            const response =await  fetch("http://localhost:3000/getLeaderboard", {
+            const response =await  fetch("/getLeaderboard", {
                 method: "GET",
                 headers: {
                     "Content-Type": "application/json",

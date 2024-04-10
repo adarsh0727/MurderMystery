@@ -13,6 +13,7 @@
         <div class="image-container" style="border:1px solid white" >
             <img src="" alt="question-img" id="question-image" class="image"/>
         </div>
+        <p id="alert-text" style="color: red; text-align: center;"></p>
         <div class="form-container">
             <form id="answerForm">
                 <input type="text" name="answer" class="style s1" placeholder="Enter your answer" id = "ans-input">
@@ -20,14 +21,15 @@
             </form>
         </div>
     </div>
-    
+
   <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.1.2/socket.io.js"></script>
 
     <script>
+        var alert_text = document.getElementById("alert-text");
         var score = 0 
         var number ;
         let wrapper = async()=>{
-            const response =await  fetch("http://localhost:3000/getScore", {
+            const response =await  fetch("/getScore", {
                 method: "GET",
                 headers: {
                     "Content-Type": "application/json",
@@ -38,23 +40,20 @@
                 const data = await response.json();
                 score = data.score;
                 number = score + 1 ;
-                console.log(number)
                 question_image.setAttribute('src',`./images/${number}.jpg`);
                 if (number > 6) {
                     submit_btn.style.display = "none";
                     ans_input_field.style.display = "none";
                 }
-
             } else {
-                console.error("Server response was not OK");
+                console.log(alert_text.innerText)
             }
         }
   
         wrapper()
 
-
         const handleLeaderboard = () => {
-            window.location.href = "http://localhost:3000/leaderboard";
+            window.location.href = "/leaderboard";
         }
 
         const answerForm = document.getElementById("answerForm");
@@ -69,7 +68,7 @@
             const ans_input = document.getElementById("ans-input").value;
 
             try {
-                const response = await fetch("http://localhost:3000/", {
+                const response = await fetch("/", {
                     method: "POST",
                     headers: {
                         "Content-Type": "application/json",
@@ -81,11 +80,13 @@
                     const data = await response.json();
                     console.log(data.user.score)
                     number = data.user.score + 1 
+                    alert_text.innerText = ""
+
                     // on completion : 
                     if (number > 6) {
                         // localStorage.setItem("number",number);
                         question_image.setAttribute('src',`./images/${number}.jpg`)   // 7.jpg is for completion of challenge...
-                        window.alert("You Comrpleted the Riddle Round successfully")
+                        window.alert("You Completed the Riddle Round successfully")
                         submit_btn.style.display = "none";
                         ans_input_field.style.display = "none";
                     }
@@ -95,7 +96,8 @@
                     }
                     console.log(data);
                 } else {
-                    console.error("Server response was not OK");
+                    alert_text.innerText = "incorrect answer";
+                    // console.error("Server response was not OK");
                 }
             } catch (error) {
                 console.error(error);

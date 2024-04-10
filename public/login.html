@@ -4,18 +4,18 @@
   <meta charset="UTF-8">
   <title>Login</title>
   <link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css'>
-  <link rel="stylesheet" href="./login.css">
+  <link rel="stylesheet" href="../login.css">
 </head>
 <body>
 
   <div class="container">
     <div id="login-box">
         <div class="logo">
-            <img src="cc2.png" class="center-block"/>
+            <img src="../cc2.png" class="center-block"/>
             <h1 class="logo-caption"><span class="tweak">C</span>orporate <span class="tweak">C</span>rime</h1>
         </div>
         <div class="controls">
-            <form action="/userlogin" method="post" id="loginForm">
+            <form id="loginForm">
                 <input type="text" id = "email" name="email" placeholder="Email" class="form-control" />
                 <input type="password" id = "password" name="password" placeholder="Password" class="form-control" />
                 <p id="error-message"></p>
@@ -42,7 +42,7 @@
         const errorMessage = document.getElementById("error-message");
 
         try {
-            const response = await fetch("http://localhost:3000/login/userlogin", {
+            const response = await fetch("/login/userlogin", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
@@ -64,8 +64,7 @@
         }
     });
 
-    socket.on("message",(data)=>{console.log(data)})
     </script>
-    <script src="./login.js"></script>
+    <script src="../login.js"></script>
 </body>
 </html>
